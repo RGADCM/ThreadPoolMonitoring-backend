@@ -1,0 +1,52 @@
+spring:
+  task:
+    execution:
+      main-async-executor:
+        name: main-async-executor
+        pool:
+          allow-core-thread-timeout: false
+          queue-capacity: 0
+          core-size: 20
+          max-size: 5000
+          keep-alive: 30
+        shutdown:
+          await-termination: true
+          await-termination-period: 30
+          wait-for-tasks-to-complete-on-shutdown: true
+      background-async-executor:
+        name: background-async-executor
+        pool:
+          allow-core-thread-timeout: false
+          queue-capacity: 10000
+          core-size: 500
+          max-size: 1000
+          keep-alive: 15
+        shutdown:
+          await-termination: true
+          await-termination-period: 5
+          wait-for-tasks-to-complete-on-shutdown: true
+
+management:
+  metrics:
+    export:
+      grafana: true
+    enable:
+      jvm: false
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "health, info, loggers, env, metrics, prometheus, threadPoolMonitoring"
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+    loggers:
+      enabled: true
+    env:
+      show-details: always
